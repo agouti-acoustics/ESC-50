@@ -24,12 +24,12 @@ def main():
     origsr, _ = read(os.path.join(inpdir, filenames[0]))
     wavs = [read(os.path.join(inpdir, f))[1] for f in tqdm(filenames)]
     wavs = np.asarray(wavs, dtype=np.float32)
-    wavs = wavs / 32768 # 16-bit integer PCM to 32-bit floating-point
+    # wavs = wavs / 32768 # 16-bit integer PCM to 32-bit floating-point
     print(f"Shape: {wavs.shape}, dtype: {wavs.dtype}")
 
     print("Resampling audio files")
     resampled = [librosa.resample(w, orig_sr=origsr, target_sr=targsr) for w in tqdm(wavs)]
-    resampled = np.asarray(resampled)
+    resampled = np.asarray(resampled, dtype=np.int16)
     print(f"Shape: {resampled.shape}, dtype: {resampled.dtype}")
 
     print("Writing resampled audio data")
